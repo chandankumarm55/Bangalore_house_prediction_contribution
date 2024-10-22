@@ -1,6 +1,5 @@
 from copyreg import pickle
 from urllib import request
-
 from flask import Flask, render_template, request
 import pandas as pd
 import pickle
