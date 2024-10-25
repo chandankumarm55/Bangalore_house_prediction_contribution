@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+        }
+
         :root {
             --primary-color: #1a237e;
             --secondary-color: #283593;
@@ -21,6 +27,9 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
+            margin: none;
+            padding: none;
+            box-sizing: border-box;
         }
 
         .navbar {
@@ -149,7 +158,7 @@
             margin-bottom: 1.5rem;
         }
 
-        .scroll-progress {
+        /* .scroll-progress {
             position: fixed;
             top: 0;
             left: 0;
@@ -158,7 +167,7 @@
             background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
             z-index: 9999;
             transition: width 0.2s ease;
-        }
+        } */
 
         @keyframes float {
             0% {
@@ -227,12 +236,11 @@
     </style>
 </head>
 
-<body>
-    <div class="scroll-progress"></div>
+<body class="w-100">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top ">
+        <div class="container p-2">
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <i class="fas fa-building mr-2"></i> Property Price Intelligence
             </a>
@@ -259,7 +267,7 @@
     </nav>
 
 
-    <section id="home" class="hero-section ">
+    <section id="home" class="hero-section w-100 mt-5">
         <div class="container hero-content">
             <div class="row align-items-center">
                 <div class="col-lg-6" data-aos="fade-right">
@@ -285,21 +293,21 @@
                     <div class="stats-card">
                         <i class="fas fa-chart-line feature-icon mb-4"></i>
                         <h3 class="mb-3">99.8% Accuracy</h3>
-                        <p class="text-muted">Industry-leading ML algorithms</p>
+                        <p class="text-muted">Industry-leading Machine Learning algorithms</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="stats-card">
                         <i class="fas fa-database feature-icon mb-4"></i>
-                        <h3 class="mb-3">1M+ Data Points</h3>
-                        <p class="text-muted">Comprehensive market analysis</p>
+                        <h3 class="mb-3">9K+ DataPoints</h3>
+                        <p class="text-muted">Comprehensive-market analysis</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
                     <div class="stats-card">
                         <i class="fas fa-city feature-icon mb-4"></i>
-                        <h3 class="mb-3">150+ Micro-Markets</h3>
-                        <p class="text-muted">Hyperlocal price intelligence</p>
+                        <h3 class="mb-3">150+ Markets</h3>
+                        <p class="text-muted">Hyperlocal price intelligence and guidelines</p>
                     </div>
                 </div>
             </div>
@@ -355,14 +363,14 @@
                 <div class="animated-card p-4">
                     <i class="fas fa-brain feature-icon mb-4"></i>
                     <h4>AI-Powered Analysis</h4>
-                    <p>Advanced machine learning algorithms process millions of data points for accurate valuations.</p>
+                    <p>Advanced ML algorithms process thousand of data points for accurate estimates.</p>
                 </div>
             </div>
             <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="animated-card p-4">
                     <i class="fas fa-chart-bar feature-icon mb-4"></i>
                     <h4>Market Intelligence</h4>
-                    <p>Real-time market data integration for precise property value estimations.</p>
+                    <p>real-time market data integration for accurate property value estimations..</p>
                 </div>
             </div>
             <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
@@ -370,7 +378,7 @@
                     <i class="fas fa-map-marked-alt feature"></i>
                     <i class="fas fa-map-marked-alt feature-icon mb-4"></i>
                     <h4>Hyperlocal Insights</h4>
-                    <p>Micro-market analysis for neighborhood-specific valuations.</p>
+                    <p>Detailed micro-market analysis for precise, neighborhood-specific property valuations.</p>
                 </div>
             </div>
         </div>
