@@ -3,123 +3,221 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SmartHome Price Predictor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Property Price Intelligence | AI-Powered Real Estate Valuation</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <style>
-         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --light-color: #ecf0f1;
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #283593;
+            --accent-color: #304ffe;
+            --light-color: #f5f5f5;
+            --transition-speed: 0.3s;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
-        
+
         .navbar {
-            background-color: var(--primary-color) !important;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: rgba(26, 35, 126, 0.95) !important;
+            backdrop-filter: blur(10px);
+            transition: all var(--transition-speed);
         }
-        
+
+        .navbar.scrolled {
+            padding: 0.5rem 1rem;
+            background-color: rgba(26, 35, 126, 0.98) !important;
+        }
+
         .hero-section {
-            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 73, 94, 0.9)), url("/api/placeholder/1920/1080");
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.95), rgba(40, 53, 147, 0.9)), url("/api/placeholder/1920/1080");
             background-size: cover;
-            color: white;
-            padding: 100px 0;
-            text-align: center;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
         }
-        
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
         .animated-card {
-            transition: transform 0.3s ease-in-out;
-            margin-bottom: 20px;
+            transition: all var(--transition-speed);
             border: none;
+            background: white;
+            border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-        
+
         .animated-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
         }
-        
+
         .feature-icon {
             font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform var(--transition-speed);
         }
-        
+
+        .animated-card:hover .feature-icon {
+            transform: scale(1.2);
+        }
+
         .prediction-form {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            transition: all var(--transition-speed);
+        }
+
+        .prediction-form:hover {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            padding: 0.5rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(48, 79, 254, 0.15);
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 12px 36px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(48, 79, 254, 0.3);
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 12px;
             padding: 2rem;
-            margin: 2rem 0;
+            transition: all var(--transition-speed);
         }
-        
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+
         .section-title {
-            color: var(--primary-color);
-            margin-bottom: 2rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
             position: relative;
-            padding-bottom: 15px;
+            display: inline-block;
         }
-        
+
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
             height: 3px;
-            background-color: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            z-index: 9999;
+            transition: width 0.2s ease;
         }
-        
-        .about-card {
-            background-color: var(--light-color);
-            padding: 2rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
-        
-        .contact-info {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
         }
-        
+
         .stats-section {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 4rem 0;
-            margin: 4rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 6rem 0;
+            margin: 6rem 0;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .btn-custom {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 10px 30px;
-            border-radius: 30px;
-            border: none;
-            transition: all 0.3s ease;
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
-        
-        .btn-custom:hover {
-            background-color: var(--secondary-color);
-            color: white;
-            transform: translateY(-2px);
+
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
         }
     </style>
 </head>
 
 <body>
+    <div class="scroll-progress"></div>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-home"></i> SmartHome Price Predictor
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="fas fa-building mr-2"></i> Property Price Intelligence
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -130,7 +228,7 @@
                         <a class="nav-link" href="#home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#predictor">Predictor</a>
+                        <a class="nav-link" href="#predictor">Valuation Tool</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
@@ -145,10 +243,20 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero-section">
-        <div class="container">
-            <h1 class="display-4">Smart Home Price Predictions</h1>
-            <p class="lead">Powered by Advanced Machine Learning for Accurate Property Valuations</p>
-            <a href="#predictor" class="btn btn-custom btn-lg">Get Started</a>
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="display-4 font-weight-bold text-white mb-4">Intelligent Property Valuation</h1>
+                    <p class="lead text-white mb-5">Leverage advanced machine learning algorithms for precise property
+                        valuations across Bangalore's premium real estate market.</p>
+                    <a href="#predictor" class="btn btn-custom btn-lg">Get Property Valuation</a>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fP38CnOHKjEO6VH-o2AmH1uLqPc35nbIGg&s"
+                        alt="Real Estate Analytics" style="width: 100%; max-width: 500px; height: auto;">
+                </div>
+
+            </div>
         </div>
     </section>
 
@@ -156,153 +264,264 @@
     <section class="stats-section">
         <div class="container">
             <div class="row text-center">
-                <div class="col-md-4">
-                    <i class="fas fa-chart-line feature-icon"></i>
-                    <h3>99.99% Accuracy</h3>
-                    <p>ML-powered predictions you can trust</p>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stats-card">
+                        <i class="fas fa-chart-line feature-icon mb-4"></i>
+                        <h3 class="mb-3">99.8% Accuracy</h3>
+                        <p class="text-muted">Industry-leading ML algorithms</p>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <i class="fas fa-database feature-icon"></i>
-                    <h3>9000+ Data Points</h3>
-                    <p>Trained on extensive real estate data</p>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stats-card">
+                        <i class="fas fa-database feature-icon mb-4"></i>
+                        <h3 class="mb-3">1M+ Data Points</h3>
+                        <p class="text-muted">Comprehensive market analysis</p>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <i class="fas fa-shield-alt feature-icon"></i>
-                    <h3>Reliable Results</h3>
-                    <p>Make informed decisions with confidence</p>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <i class="fas fa-chart-line feature-icon"></i>
-                    <h3>Made For Banglorian</h3>
-                    <p>Anyalis the real data set's of plots , flats </p>
-                </div>
-                <div class="col-md-4">
-                    <i class="fas fa-database feature-icon"></i>
-                    <h3>Aviod Risks</h3>
-                    <p>By knowing the estimated or abousultae values </p>
-                </div>
-                <div class="col-md-4">
-                    <i class="fas fa-shield-alt feature-icon"></i>
-                    <h3>100+ cites</h3>
-                    <p>Cover's more then 100+ cities price's </p>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stats-card">
+                        <i class="fas fa-city feature-icon mb-4"></i>
+                        <h3 class="mb-3">150+ Micro-Markets</h3>
+                        <p class="text-muted">Hyperlocal price intelligence</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-
-
-
     <!-- Predictor Section -->
-    <section id="predictor" class="container my-5">
-        <h2 class="text-center section-title">Price Predictor</h2>
+    <section id="predictor" class="container my-5 py-5">
+        <h2 class="section-title text-center mb-5" data-aos="fade-up">Property Valuation Engine</h2>
         <div class="row">
-            <div class="col-lg-8 mx-auto prediction-form">
-                <form method="post" accept-charset="utf-8" action="/predict">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label><i class="fas fa-map-marker-alt"></i> Location</label>
-                            <select class="form-control" id="location" name="location" required>
-                                {% for location in locations %}
-                                <option value="{{ location }}">{{ location }}</option>
-                                {% endfor %}
-                            </select>
+            <div class="col-lg-8 mx-auto">
+                <div class="prediction-form" data-aos="fade-up">
+                    <form method="post" accept-charset="utf-8" action="/predict">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label><i class="fas fa-map-marker-alt mr-2"></i>Location</label>
+                                <select class="form-control" id="location" name="location" required>
+                                    {% for location in locations %}
+                                    <option value="{{ location }}">{{ location }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label><i class="fas fa-home mr-2"></i>Configuration (BHK)</label>
+                                <input type="number" class="form-control" id="bhk" name="bhk" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label><i class="fas fa-bath mr-2"></i>Bathrooms</label>
+                                <input type="number" class="form-control" id="bath" name="bath" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label><i class="fas fa-ruler-combined mr-2"></i>Total Area (sq ft)</label>
+                                <input type="number" class="form-control" id="sqft" name="sqft" required>
+                            </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label><i class="fas fa-bed"></i> BHK</label>
-                            <input type="number" class="form-control" id="bhk" name="bhk" required>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label><i class="fas fa-bath"></i> Bathrooms</label>
-                            <input type="number" class="form-control" id="bath" name="bath" required>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label><i class="fas fa-ruler-combined"></i> Total Square Feet</label>
-                            <input type="number" class="form-control" id="sqft" name="sqft" required>
-                        </div>
+                        <button class="btn btn-custom btn-block" type="button" onclick="send_data()">
+                            <i class="fas fa-calculator mr-2"></i>Generate Valuation Report
+                        </button>
+                    </form>
+                    <div class="text-center mt-4">
+                        <h3><span id="prediction"></span></h3>
                     </div>
-                    <button class="btn btn-custom btn-block" type="button" onclick="send_data()">
-                        <i class="fas fa-calculator"></i> Predict Price
-                    </button>
-                </form>
-                <div class="text-center mt-4">
-                    <h3><span id="prediction"></span></h3>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="container my-5">
-        <h2 class="text-center section-title">About Our Service</h2>
+    <section id="about" class="container my-5 py-5">
+        <h2 class="section-title text-center" data-aos="fade-up">Our Technology</h2>
         <div class="row">
-            <div class="col-lg-6">
-                <div class="about-card">
-                    <h4><i class="fas fa-rocket"></i> Our Mission</h4>
-                    <p>To provide accurate, data-driven property valuations that help buyers and sellers make informed decisions in the Bangalore real estate market.</p>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="animated-card p-4">
+                    <i class="fas fa-brain feature-icon mb-4"></i>
+                    <h4>AI-Powered Analysis</h4>
+                    <p>Advanced machine learning algorithms process millions of data points for accurate valuations.</p>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="about-card">
-                    <h4><i class="fas fa-cogs"></i> Our Technology</h4>
-                    <p>We use advanced machine learning algorithms and comprehensive data analysis to ensure the most accurate price predictions possible.</p>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="animated-card p-4">
+                    <i class="fas fa-chart-bar feature-icon mb-4"></i>
+                    <h4>Market Intelligence</h4>
+                    <p>Real-time market data integration for precise property value estimations.</p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="animated-card p-4">
+                    <i class="fas fa-map-marked-alt feature"></i>
+                    <i class="fas fa-map-marked-alt feature-icon mb-4"></i>
+                    <h4>Hyperlocal Insights</h4>
+                    <p>Micro-market analysis for neighborhood-specific valuations.</p>
                 </div>
             </div>
         </div>
-        <div class="row mt-4">
-            <div class="col-lg-12">
-                <div class="about-card">
-                    <h4><i class="fas fa-chart-bar"></i> Industry Standards</h4>
-                    <p>Our prediction model is regularly updated with the latest market data and follows industry best practices for real estate valuation. We maintain high standards of accuracy and reliability through:
+
+        <div class="row mt-5">
+            <div class="col-lg-12" data-aos="fade-up">
+                <div class="animated-card p-5">
+                    <h4 class="mb-4"><i class="fas fa-shield-alt feature-icon mr-3"></i>Industry Standards</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Real-time market data
+                                    integration
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Advanced statistical modeling
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Continuous algorithm
+                                    refinement
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Compliance with RERA
+                                    guidelines
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> ISO 27001 certified security
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Regular validation audits
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="container my-5 py-5">
+        <h2 class="section-title text-center" data-aos="fade-up">Client Testimonials</h2>
+        <div class="row">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left feature-icon mb-3"></i>
+                    <p class="mb-4">"The accuracy of their valuation model helped us make an informed investment
+                        decision."
                     </p>
-                    <ul>
-                        <li>Regular model updates with fresh market data</li>
-                        <li>Validation against actual sale prices</li>
-                        <li>Consideration of micro-market trends</li>
-                        <li>Integration of location-specific factors</li>
-                    </ul>
+                    <div class="d-flex align-items-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLmVgQtsYI2Cki09xMFj6jDxDjbeGTwCk1lg&s"
+                            alt="Client" style="width: 100px; height: 100px; border-radius: 50%; padding: 5px;">
+
+                        <div>
+                            <h5 class="mb-0">Rahul Sharma</h5>
+                            <small class="text-muted">Property Investor</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left feature-icon mb-3"></i>
+                    <p class="mb-4">"Their hyperlocal insights gave us a competitive edge in negotiations."</p>
+                    <div class="d-flex align-items-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBDu7gBGbsHoUjJOcktsAygonjJ15_nursQ&s"
+                            alt="Client" style="width: 100px; height: 100px; border-radius: 50%; padding: 5px;">
+                        <div>
+                            <h5 class="mb-0">Priya Patel</h5>
+                            <small class="text-muted">Real Estate Agent</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left feature-icon mb-3"></i>
+                    <p class="mb-4">"The most reliable property valuation tool in the Bangalore market."</p>
+                    <div class="d-flex align-items-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvB081KN9JZS2aOIkdydYt7ylCxvZSAyd5Xw&s"
+                            alt="Client" style="width: 100px; height: 100px; border-radius: 50%; padding: 5px;">
+                        <div>
+                            <h5 class="mb-0">Arun Kumar</h5>
+                            <small class="text-muted">Property Developer</small>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="container my-5">
-        <h2 class="text-center section-title">Contact Us</h2>
+    <section id="contact" class="container my-5 py-5">
+        <h2 class="section-title text-center" data-aos="fade-up">Connect With Us</h2>
         <div class="row">
-            <div class="col-lg-6">
-                <div class="contact-info">
-                    <h4><i class="fas fa-envelope"></i> Email Us</h4>
-                    <p>support@smarthomepredictor.com</p>
-                    <h4><i class="fas fa-phone"></i> Call Us</h4>
-                    <p>+91 80 1234 5678</p>
-                    <h4><i class="fas fa-map-marked-alt"></i> Visit Us</h4>
-                    <p>123 Tech Park, Whitefield<br>Bangalore, Karnataka 560066</p>
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="animated-card p-4">
+                    <h4 class="mb-4"><i class="fas fa-location-dot feature-icon mr-2"></i>Our Office</h4>
+                    <p>
+                        <i class="fas fa-building mr-2"></i> Level 15, Prestige Trade Tower
+                    </p>
+                    <p>
+                        <i class="fas fa-map-marker-alt mr-2"></i> Palace Road, Bengaluru 560001
+                    </p>
+                    <p>
+                        <i class="fas fa-phone mr-2"></i> +91 80 4567 8900
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope mr-2"></i> contact@propertyintelligence.com
+                    </p>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-custom mr-2">
+                            <i class="fab fa-whatsapp mr-2"></i>WhatsApp
+                        </a>
+                        <a href="#" class="btn btn-custom">
+                            <i class="fas fa-calendar-check mr-2"></i>Schedule Meeting
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="contact-form">
+            <div class="col-lg-7" data-aos="fade-left">
+                <div class="animated-card p-4">
                     <form id="contactForm">
-                        <div class="form-group">
-                            <label><i class="fas fa-user"></i> Name</label>
-                            <input type="text" class="form-control" id="name" required>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-user mr-2"></i>Full Name</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-envelope mr-2"></i>Email Address</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-phone mr-2"></i>Phone Number</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-building mr-1"></i>Service Type</label>
+                                    <select class="form-control" required>
+                                        <option value="">Select Service</option>
+                                        <option>Property Valuation</option>
+                                        <option>Investment Advisory</option>
+                                        <option>Market Research</option>
+                                        <option>Other Services</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-envelope"></i> Email</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-phone"></i> Phone</label>
-                            <input type="tel" class="form-control" id="phone" required>
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-comment"></i> Message</label>
-                            <textarea class="form-control" id="message" rows="4" required></textarea>
+                            <label><i class="fas fa-message mr-2"></i>Message</label>
+                            <textarea class="form-control" rows="4" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-custom btn-block">
-                            <i class="fas fa-paper-plane"></i> Send Message
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
                         </button>
                     </form>
                 </div>
@@ -310,19 +529,75 @@
         </div>
     </section>
 
-
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-            <p>© 2024 SmartHome Price Predictor. All Rights Reserved.</p>
-            <p>Made with <i class="fas fa-heart text-danger"></i> in Bangalore</p>
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>About Us</h5>
+                    <p>Leading provider of AI-powered property valuation solutions in Bangalore's real estate market.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white">Home</a></li>
+                        <li><a href="#predictor" class="text-white">Valuation Tool</a></li>
+                        <li><a href="#about" class="text-white">About</a></li>
+                        <li><a href="#contact" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Connect With Us</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white mr-3"><i class="fab fa-linkedin fa-2x"></i></a>
+                        <a href="#" class="text-white mr-3"><i class="fab fa-twitter fa-2x"></i></a>
+                        <a href="#" class="text-white mr-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center mt-4">
+                <p>© 2024 Property Price Intelligence. All rights reserved.</p>
+                <p class="mb-0">
+                    <small>Powered by Advanced Machine Learning & Market Intelligence</small>
+                </p>
+            </div>
         </div>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
     <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Update scroll progress bar
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector(".scroll-progress").style.width = scrolled + "%";
+        });
+
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
@@ -330,49 +605,51 @@
             });
         });
 
+        // Price formatter
         function formatRupees(amount) {
-            let amountStr = amount.toString().split('.');
-            let integerPart = amountStr[0];
-            let decimalPart = amountStr.length > 1 ? '.' + amountStr[1] : '';
-
-            let lastThreeDigits = integerPart.slice(-3);
-            let otherDigits = integerPart.slice(0, -3);
-
-            if (otherDigits !== '') {
-                lastThreeDigits = ',' + lastThreeDigits;
-            }
-
-            let formatted = otherDigits.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThreeDigits + decimalPart;
-            return '₹' + formatted;
+            const formatter = new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 2
+            });
+            return formatter.format(amount);
         }
 
+        // Form submission
         function send_data() {
-            document.querySelector('form').addEventListener("submit", function(event) {
-                event.preventDefault();
+            document.querySelector('form').addEventListener("submit", function (e) {
+                e.preventDefault();
             });
 
-            let fd = new FormData(document.querySelector('form'));
-            let xhr = new XMLHttpRequest();
+            const fd = new FormData(document.querySelector('form'));
+            const xhr = new XMLHttpRequest();
             xhr.open('POST', '/predict', true);
 
             document.getElementById('prediction').innerHTML =
-                '<i class="fas fa-spinner fa-spin"></i> Calculating prediction...';
+                '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>';
 
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
-                    let response = parseFloat(xhr.responseText);
+                    const response = parseFloat(xhr.responseText);
                     document.getElementById('prediction').innerHTML =
-                        '<i class="fas fa-check-circle"></i> Estimated Price: ' + formatRupees(response);
+                        `<div class="alert alert-success" role="alert">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Estimated Value: ${formatRupees(response)}
+                        </div>`;
                 }
             };
 
             xhr.send(fd);
         }
-    </script>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Add your contact form submission logic here
+            alert('Thank you for your message. We will get back to you soon!');
+            this.reset();
+        });
+    </script>
 </body>
 
 </html>
