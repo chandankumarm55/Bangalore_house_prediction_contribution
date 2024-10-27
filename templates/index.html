@@ -1,104 +1,678 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Property Price Intelligence | AI-Powered Real Estate Valuation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+        }
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #283593;
+            --accent-color: #304ffe;
+            --light-color: #f5f5f5;
+            --transition-speed: 0.3s;
+        }
 
-    <title>House Price Predictor</title>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            margin: none;
+            padding: none;
+            box-sizing: border-box;
+        }
+
+        .navbar {
+            background-color: rgba(26, 35, 126, 0.95) !important;
+            backdrop-filter: blur(10px);
+            transition: all var(--transition-speed);
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 1rem;
+            background-color: rgba(26, 35, 126, 0.98) !important;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.95), rgba(40, 53, 147, 0.9)), url("/api/placeholder/1920/1080");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .animated-card {
+            transition: all var(--transition-speed);
+            border: none;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .animated-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform var(--transition-speed);
+        }
+
+        .animated-card:hover .feature-icon {
+            transform: scale(1.2);
+        }
+
+        .prediction-form {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            transition: all var(--transition-speed);
+        }
+
+        .prediction-form:hover {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            padding: 0.5rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(48, 79, 254, 0.15);
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 12px 36px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(48, 79, 254, 0.3);
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all var(--transition-speed);
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-weight: 800;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        /* .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            z-index: 9999;
+            transition: width 0.2s ease;
+        } */
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 6rem 0;
+            margin: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            .responsive-img {
+                margin-top: 0.5rem;
+                width: 100%;
+                /* Ensures it takes the full width of its container */
+                max-width: none;
+                /* Removes the max-width limit on smaller screens */
+            }
+        }
+    </style>
 </head>
-<body class="bg-dark">
-<div class="container">
-    <div class="row">
-        <div class="card" style="width: 100%; height: 100%; margin-top: 50px">
-            <div class="card-header" style="text-align: center">
-                <h1>Welcome to House Predictor</h1>
+
+<body class="w-100">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top ">
+        <div class="container p-2">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="fas fa-building mr-2"></i> Property Price Intelligence
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#predictor">Valuation Tool</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
             </div>
-            <div class="card-body">
-                <form method="post" accept-charset="utf-8" action="/predict">
-                    <div class="row">
-                        <div class="col-md-6 form-group" style="text-align: center">
-                            <label><b>Select the Location : </b></label>
-                            <select class="select-picker form-control" id="location" name="location" required="1">
-                                {% for location in locations %}
-                                <option value="{{ location }}"> {{ location }}</option>
-                                {% endfor %}
+        </div>
+    </nav>
 
-                            </select>
-                        </div>
 
-                        <div class="col-md-6 form-group" style="text-align: center">
-                            <label><b>Enter BHK</b></label>
-                            <input type="text" class="form-control" id="bhk" name="bhk"
-                                   placeholder="Enter Bedroom, Hall, and Kitchen">
-                        </div>
-
-                        <div class="col-md-6 form-group" style="text-align: center">
-                            <label><b>Enter Number of Bathrooms</b></label>
-                            <input type="text" class="form-control" id="bath" name="bath"
-                                   placeholder="Enter Numer of Bathrooms">
-                        </div>
-
-                        <div class="col-md-6 form-group" style="text-align: center">
-                            <label><b>Enter Total Square Feet</b></label>
-                            <input type="text" class="form-control" id="sqft" name="sqft"
-                                   placeholder="Enter Total Square Feet">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <button class="btn btn-primary form-control" onclick="send_data()">Predict Price</button>
-                        </div>
-                    </div>
-                </form>
-                <br>
-
-                <div class="col-md-12" style="text-align: center">
-                    <h3><span id="prediction"></span></h3>
+    <section id="home" class="hero-section w-100 mt-5">
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="display-4 font-weight-bold text-white mb-4">Intelligent Property Valuation</h1>
+                    <p class="lead text-white mb-5">Leverage advanced machine learning algorithms for precise property
+                        valuations across Bangalore's premium real estate market.</p>
+                    <a href="#predictor" class="btn btn-custom btn-lg">Get Property Valuation</a>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fP38CnOHKjEO6VH-o2AmH1uLqPc35nbIGg&s"
+                        alt="Real Estate Analytics" class="responsive-img">
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<script>
-    function form_handler(event) {
-        event.preventDefault()
-    }
 
-    function send_data() {
-        document.querySelector('form').addEventListener("submit", form_handler);
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stats-card">
+                        <i class="fas fa-chart-line feature-icon mb-4"></i>
+                        <h3 class="mb-3">99.8% Accuracy</h3>
+                        <p class="text-muted">Industry-leading Machine Learning algorithms</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stats-card">
+                        <i class="fas fa-database feature-icon mb-4"></i>
+                        <h3 class="mb-3">9K+ DataPoints</h3>
+                        <p class="text-muted">Comprehensive-market analysis</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stats-card">
+                        <i class="fas fa-city feature-icon mb-4"></i>
+                        <h3 class="mb-3">150+ Markets</h3>
+                        <p class="text-muted">Hyperlocal price intelligence and guidelines</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        let fd = new FormData(document.querySelector('form'));
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/predict', true)
+    <!-- Predictor Section -->
+    <section id="predictor" class="container my-5 py-5">
+        <h2 class="section-title text-center mb-5" data-aos="fade-up">Property Valuation Engine</h2>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="prediction-form" data-aos="fade-up">
+                    <form method="post" accept-charset="utf-8" action="/predict">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label><i class="fas fa-map-marker-alt mr-2"></i>Location</label>
+                                <select class="form-control" id="location" name="location" required>
+                                    {% for location in locations %}
+                                    <option value="{{ location }}">{{ location }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label><i class="fas fa-home mr-2"></i>Configuration (BHK)</label>
+                                <input type="number" class="form-control" id="bhk" name="bhk" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label><i class="fas fa-bath mr-2"></i>Bathrooms</label>
+                                <input type="number" class="form-control" id="bath" name="bath" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label><i class="fas fa-ruler-combined mr-2"></i>Total Area (sq ft)</label>
+                                <input type="number" class="form-control" id="sqft" name="sqft" required>
+                            </div>
+                        </div>
+                        <button class="btn btn-custom btn-block" type="button" onclick="send_data()">
+                            <i class="fas fa-calculator mr-2"></i>Generate Valuation Report
+                        </button>
+                    </form>
+                    <div class="text-center mt-4">
+                        <h3><span id="prediction"></span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        document.getElementById('prediction').innerHTML = "Wait Predicting Price!......";
+    <!-- About Section -->
+    <section id="about" class="container my-5 py-5">
+        <h2 class="section-title text-center" data-aos="fade-up">Our Technology</h2>
+        <div class="row">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="animated-card p-4">
+                    <i class="fas fa-brain feature-icon mb-4"></i>
+                    <h4>AI-Powered Analysis</h4>
+                    <p>Advanced ML algorithms process thousand of data points for accurate estimates.</p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="animated-card p-4">
+                    <i class="fas fa-chart-bar feature-icon mb-4"></i>
+                    <h4>Market Intelligence</h4>
+                    <p>real-time market data integration for accurate property value estimations..</p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="animated-card p-4">
+                    <i class="fas fa-map-marked-alt feature"></i>
+                    <i class="fas fa-map-marked-alt feature-icon mb-4"></i>
+                    <h4>Hyperlocal Insights</h4>
+                    <p>Detailed micro-market analysis for precise, neighborhood-specific property valuations.</p>
+                </div>
+            </div>
+        </div>
 
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                document.getElementById('prediction').innerHTML = "Prediction : ₹" + xhr.responseText;
+        <div class="row mt-5">
+            <div class="col-lg-12" data-aos="fade-up">
+                <div class="animated-card p-5">
+                    <h4 class="mb-4"><i class="fas fa-shield-alt feature-icon mr-3"></i>Industry Standards</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Real-time market data
+                                    integration
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Advanced statistical modeling
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Continuous algorithm
+                                    refinement
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Compliance with RERA
+                                    guidelines
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> ISO 27001 certified security
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-check-circle text-success mr-2"></i> Regular validation audits
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="container my-5 py-5">
+        <h2 class="section-title text-center" data-aos="fade-up">Client Testimonials</h2>
+        <div class="row">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left feature-icon mb-3"></i>
+                    <p class="mb-4">"The accuracy of their valuation model helped us make an informed investment
+                        decision."
+                    </p>
+                    <div class="d-flex align-items-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLmVgQtsYI2Cki09xMFj6jDxDjbeGTwCk1lg&s"
+                            alt="Client" style="width: 100px; height: 100px; border-radius: 50%; padding: 5px;">
+
+                        <div>
+                            <h5 class="mb-0">Rahul Sharma</h5>
+                            <small class="text-muted">Property Investor</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left feature-icon mb-3"></i>
+                    <p class="mb-4">"Their hyperlocal insights gave us a competitive edge in negotiations."</p>
+                    <div class="d-flex align-items-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBDu7gBGbsHoUjJOcktsAygonjJ15_nursQ&s"
+                            alt="Client" style="width: 100px; height: 100px; border-radius: 50%; padding: 5px;">
+                        <div>
+                            <h5 class="mb-0">Priya Patel</h5>
+                            <small class="text-muted">Real Estate Agent</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left feature-icon mb-3"></i>
+                    <p class="mb-4">"The most reliable property valuation tool in the Bangalore market."</p>
+                    <div class="d-flex align-items-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvB081KN9JZS2aOIkdydYt7ylCxvZSAyd5Xw&s"
+                            alt="Client" style="width: 100px; height: 100px; border-radius: 50%; padding: 5px;">
+                        <div>
+                            <h5 class="mb-0">Arun Kumar</h5>
+                            <small class="text-muted">Property Developer</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container my-5 py-5">
+        <h2 class="section-title text-center" data-aos="fade-up">Connect With Us</h2>
+        <div class="row">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="animated-card p-4">
+                    <h4 class="mb-4"><i class="fas fa-location-dot feature-icon mr-2"></i>Our Office</h4>
+                    <p>
+                        <i class="fas fa-building mr-2"></i> Level 15, Prestige Trade Tower
+                    </p>
+                    <p>
+                        <i class="fas fa-map-marker-alt mr-2"></i> Palace Road, Bengaluru 560001
+                    </p>
+                    <p>
+                        <i class="fas fa-phone mr-2"></i> +91 80 4567 8900
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope mr-2"></i> contact@propertyintelligence.com
+                    </p>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-custom mr-2">
+                            <i class="fab fa-whatsapp mr-2"></i>WhatsApp
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7" data-aos="fade-left">
+                <div class="animated-card p-4">
+                    <form id="contactForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-user mr-2"></i>Full Name</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-envelope mr-2"></i>Email Address</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-phone mr-2"></i>Phone Number</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-building mr-1"></i>Service Type</label>
+                                    <select class="form-control" required>
+                                        <option value="">Select Service</option>
+                                        <option>Property Valuation</option>
+                                        <option>Investment Advisory</option>
+                                        <option>Market Research</option>
+                                        <option>Other Services</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-message mr-2"></i>Message</label>
+                            <textarea class="form-control" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-custom btn-block">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>About Us</h5>
+                    <p>Leading provider of AI-powered property valuation solutions in Bangalore's real estate market.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white">Home</a></li>
+                        <li><a href="#predictor" class="text-white">Valuation Tool</a></li>
+                        <li><a href="#about" class="text-white">About</a></li>
+                        <li><a href="#contact" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Connect With Us</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white mr-3"><i class="fab fa-linkedin fa-2x"></i></a>
+                        <a href="#" class="text-white mr-3"><i class="fab fa-twitter fa-2x"></i></a>
+                        <a href="#" class="text-white mr-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center mt-4">
+                <p>© 2024 Property Price Intelligence. All rights reserved.</p>
+                <p class="mb-0">
+                    <small>Powered by Advanced Machine Learning & Market Intelligence</small>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
-        };
 
-        xhr.onload = function () {
-        };
-        xhr.send(fd);
+            // Update scroll progress bar
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector(".scroll-progress").style.width = scrolled + "%";
+        });
 
-    }
-</script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
+        // Price formatter
+        function formatRupees(amount) {
+            const formatter = new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 2
+            });
+            return formatter.format(amount);
+        }
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+        // Form submission
+        function send_data() {
+            document.querySelector('form').addEventListener("submit", function (e) {
+                e.preventDefault();
+            });
+
+            const fd = new FormData(document.querySelector('form'));
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/predict', true);
+
+            document.getElementById('prediction').innerHTML =
+                '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>';
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    const response = parseFloat(xhr.responseText);
+                    document.getElementById('prediction').innerHTML =
+                        `<div class="alert alert-success" role="alert">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Estimated Value: ${formatRupees(response)}
+                        </div>`;
+                }
+            };
+
+            xhr.send(fd);
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Add your contact form submission logic here
+            alert('Thank you for your message. We will get back to you soon!');
+            this.reset();
+        });
+    </script>
 </body>
+
 </html>
