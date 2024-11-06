@@ -9,6 +9,12 @@
 
 </div>
 
+<div>
+  <img src="images/one.png" alt="Image One"/>
+  <img src="images/two.jpg" alt="Image Two"/>
+  <img src="images/three.png" alt="Image Three"/>
+</div>
+
 ## 📋 Overview
 
 A sophisticated web application leveraging Flask and machine learning to predict house prices in Bangalore. Using Ridge Regression, it provides accurate price predictions based on location, BHK, bathrooms, and square footage.
@@ -62,7 +68,7 @@ A sophisticated web application leveraging Flask and machine learning to predict
 
 ```bash
 # Clone the repository
-git clone https://github.com/chandankumarm55/Bangalore_house_prediction_contribution.git
+git clone https://github.com/Akbarhusain12/Bangalore_house_prediction.git
 
 # Navigate to project directory
 cd Bangalore_house_prediction_contribution
